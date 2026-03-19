@@ -1,0 +1,25 @@
+name: swarmpr
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - litellm
+      - PyGithub
+      - fastapi
+      - uvicorn[standard]
+      - typer[all]
+      - pyyaml
+      - pydantic>=2.0
+      - rich
+      - gitpython
+      - httpx
+      # Dev / Testing
+      - pytest
+      - pytest-asyncio
+      - pytest-cov
+      - ruff
+      - pydocstyle
+      - pre-commit

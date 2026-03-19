@@ -1,0 +1,65 @@
+project:
+  name: "my-fintech-app"
+  repo: "https://github.com/user/repo"
+
+providers:
+  planner:
+    model: "anthropic/claude-sonnet-4-20250514"
+    # api_base: "http://192.168.1.100:11434"  # Local model via Ollama
+  coder:
+    model: "anthropic/claude-sonnet-4-20250514"
+  tester:
+    model: "anthropic/claude-haiku-4-5-20251001"
+  reviewer:
+    model: "openai/gpt-4o"  # Cross-model review for independence
+
+risk_tiers:
+  tier_3:
+    description: "Critical path — payment logic, auth, compliance"
+    paths:
+      - "payments/"
+      - "auth/"
+      - "crypto/"
+      - "compliance/"
+    keywords:
+      - "api_key"
+      - "secret"
+      - "token"
+      - "password"
+      - "pci"
+      - "encrypt"
+      - "decrypt"
+    action: "block"  # PR created as draft, human review required
+
+  tier_2:
+    description: "Business logic — APIs, services, data models"
+    paths:
+      - "api/"
+      - "services/"
+      - "models/"
+    keywords: []
+    action: "flag"  # PR created with AI review, human notified
+
+  tier_1:
+    description: "Low risk — config, docs, tests, tooling"
+    paths:
+      - "config/"
+      - "docs/"
+      - "tests/"
+      - ".github/"
+      - "scripts/"
+    keywords: []
+    action: "approve"  # PR created with AI approval, merge-ready
+
+pipeline:
+  max_diff_lines: 500
+  test_timeout_seconds: 120
+  forbidden_paths:
+    - ".env"
+    - "secrets/"
+    - "credentials/"
+
+metrics:
+  track_tokens: true
+  track_timing: true
+  track_cost: true

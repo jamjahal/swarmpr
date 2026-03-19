@@ -1,0 +1,2 @@
+[console_scripts]
+swarmpr = swarmpr.cli:app

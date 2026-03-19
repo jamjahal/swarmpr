@@ -1,0 +1,10 @@
+target-version = "py310"
+line-length = 88
+
+[lint]
+select = ["E", "F", "W", "I", "N", "UP"]
+# D rules handled via pydocstyle separately to avoid duplication
+ignore = []
+
+[lint.isort]
+known-first-party = ["swarmpr"]

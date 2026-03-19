@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "swarmpr"
+version = "0.1.0"
+description = "Multi-agent pipeline that turns task descriptions into tested, risk-reviewed pull requests"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Allan Hall", email = "jallanhall@gmail.com"},
+]
+dependencies = [
+    "litellm",
+    "PyGithub",
+    "fastapi",
+    "uvicorn[standard]",
+    "typer[all]",
+    "pyyaml",
+    "pydantic>=2.0",
+    "rich",
+    "gitpython",
+    "httpx",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "pytest-cov",
+    "ruff",
+    "pydocstyle",
+    "pre-commit",
+]
+
+[tool.setuptools.packages.find]
+include = ["swarmpr*"]
+
+[project.scripts]
+swarmpr = "swarmpr.cli:app"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "integration: marks tests that require live API keys (deselect with '-m \"not integration\"')",
+]
+
+[tool.pydocstyle]
+convention = "google"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "D", "UP"]
+ignore = ["D100", "D104"]  # Allow missing module/package docstrings
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"

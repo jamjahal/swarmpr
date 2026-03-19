@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: swarmpr
+Version: 0.1.0
+Summary: Multi-agent pipeline that turns task descriptions into tested, risk-reviewed pull requests
+Author-email: Allan Hall <jallanhall@gmail.com>
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: litellm
+Requires-Dist: PyGithub
+Requires-Dist: fastapi
+Requires-Dist: uvicorn[standard]
+Requires-Dist: typer[all]
+Requires-Dist: pyyaml
+Requires-Dist: pydantic>=2.0
+Requires-Dist: rich
+Requires-Dist: gitpython
+Requires-Dist: httpx
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-asyncio; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: pydocstyle; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"
