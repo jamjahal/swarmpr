@@ -178,6 +178,7 @@ class PipelineState(BaseModel):
         current_stage: Which agent is currently executing.
         branch_name: Git branch created for this pipeline run.
         plan: Structured plan from the planner agent.
+        generated_files: Map of file path to content from the coder agent.
         diff: Generated code diff from the coder agent.
         test_output: Raw test execution output from the tester agent.
         tests_passed: Whether all tests passed.
@@ -193,6 +194,7 @@ class PipelineState(BaseModel):
     current_stage: PipelineStage | None = None
     branch_name: str | None = None
     plan: TaskPlan | None = None
+    generated_files: dict[str, str] = Field(default_factory=dict)
     diff: str | None = None
     test_output: str | None = None
     tests_passed: bool | None = None
