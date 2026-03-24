@@ -1,0 +1,41 @@
+services:
+  # --- API Server (default) ---
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+    restart: unless-stopped
+
+  # --- CLI mode: run pipeline against a mounted repo ---
+  # Usage: docker compose run --rm cli run --repo /repo --task "Add validation"
+  cli:
+    build: .
+    entrypoint: ["swarmpr"]
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - ${REPO_PATH:-.}:/repo
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+    profiles:
+      - cli
+
+  # --- Demo mode: run the built-in fintech demo ---
+  # Usage: docker compose run --rm demo demo --tier 2
+  demo:
+    build: .
+    entrypoint: ["swarmpr"]
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    profiles:
+      - demo

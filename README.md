@@ -5,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![Pydantic v2](https://img.shields.io/badge/pydantic-v2-e92063.svg)](https://docs.pydantic.dev/)
+[![Docker](https://img.shields.io/badge/docker-ready-2496ED.svg?logo=docker&logoColor=white)](https://docs.docker.com/)
 
 **Multi-agent pipeline that turns task descriptions into tested, risk-reviewed pull requests.**
 
@@ -107,7 +108,7 @@ tests/                      # 100+ tests, TDD from day one
 
 ### Prerequisites
 
-- Python 3.10+
+- Python 3.10+ (or Docker)
 - conda (recommended) or pip
 - At least one LLM API key (OpenAI, Anthropic, etc.) — or a local model via Ollama
 
@@ -217,6 +218,57 @@ The **escalation policy** layer adds overrides: diffs exceeding `max_diff_lines`
 
 ---
 
+## Docker
+
+### API Server
+
+```bash
+# Create your config
+cp config.example.yaml config.yaml
+# Edit config.yaml with your provider settings...
+
+# Start the API server
+docker compose up api
+```
+
+The server is available at `http://localhost:8000` with a health check at `/health`.
+
+### CLI Mode
+
+Mount a local repo and run the pipeline inside the container:
+
+```bash
+# Run against a local repo
+REPO_PATH=/path/to/your/repo docker compose run --rm cli \
+    run --repo /repo --task "Add input validation"
+```
+
+### Demo Mode
+
+```bash
+docker compose run --rm demo demo --tier 2
+```
+
+### Environment Variables
+
+Pass API keys via a `.env` file or shell environment:
+
+```bash
+export OPENAI_API_KEY=sk-...
+export ANTHROPIC_API_KEY=sk-ant-...
+export GITHUB_TOKEN=ghp_...
+docker compose up api
+```
+
+### Build Only
+
+```bash
+docker build -t swarmpr .
+docker run -p 8000:8000 -v ./config.yaml:/app/config.yaml:ro swarmpr
+```
+
+---
+
 ## Development
 
 ### Running Tests
@@ -280,6 +332,7 @@ Throughout, the **Event Bus** emits typed events (`PIPELINE_STARTED`, `AGENT_COM
 | Testing | pytest + pytest-asyncio | TDD from day one, async support |
 | Linting | Ruff | Fast, replaces flake8/isort/pyupgrade |
 | CI/CD | GitHub Actions | Lint, test (3.10-3.12), type check, security scan |
+| Container | Docker + Compose | Multi-stage build, non-root, health checks |
 
 ---
 
