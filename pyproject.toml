@@ -61,3 +61,6 @@ ignore = ["D100", "D104"]  # Allow missing module/package docstrings
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[tool.bandit]
+exclude_dirs = ["tests", "demo"]
