@@ -1,0 +1,12 @@
+name: "Tier 3 Demo — Payment Logic"
+tier: 3
+description: >
+  Add a refund_payment method to the PaymentProcessor class in
+  payments/processor.py. The method should validate that the payment
+  is in CAPTURED or SETTLED state, create a refund record, and update
+  the payment status to REFUNDED. Add tests for the new method including
+  edge cases (refunding a pending payment, double refund).
+expected_action: "block"
+expected_files:
+  - payments/processor.py
+  - tests/test_processor.py

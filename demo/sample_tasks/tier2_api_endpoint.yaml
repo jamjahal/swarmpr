@@ -1,0 +1,10 @@
+name: "Tier 2 Demo — API Endpoint"
+tier: 2
+description: >
+  Add a new GET /payments/summary endpoint to api/endpoints.py that
+  returns total payment count and sum of all payment amounts. Include
+  a test for the new endpoint in tests/test_endpoints.py.
+expected_action: "flag"
+expected_files:
+  - api/endpoints.py
+  - tests/test_endpoints.py

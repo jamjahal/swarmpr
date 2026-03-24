@@ -1,0 +1,9 @@
+name: "Tier 1 Demo — Config Change"
+tier: 1
+description: >
+  Change the LOG_LEVEL from INFO to DEBUG in config/settings.py
+  and add a new LOG_FILE setting pointing to /var/log/fintech/app.log.
+  This is a low-risk config-only change that should be auto-approved.
+expected_action: "approve"
+expected_files:
+  - config/settings.py
